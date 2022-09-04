@@ -46,13 +46,12 @@ int main() {
                     game->movingPiece = nullptr;
                 }
                 
-                
-
 
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::R) {
                 game->board->initializeBoard(game->board->bottomPlayer);
+                game->currTurn = WHITE;
             }
                 // if (isPromoting) {
                 //     int promotionX;
@@ -113,7 +112,10 @@ int main() {
         if (game->movingPiece != nullptr) {
             game->movingPiece->pieceSprite.setPosition(position.x - size / 2, position.y - size / 2);
             game->gameWindow.draw(game->movingPiece->pieceSprite);
+            game->drawPossibleMoves();
         }
+        game->drawPieces();
+
         game->gameWindow.display();
 
     }

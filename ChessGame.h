@@ -13,7 +13,13 @@ class ChessGame {
         Color currTurn;
         ChessPiece *movingPiece;
         sf::RenderWindow gameWindow;
+        sf::CircleShape possibleMoveSprite;
+        sf::RectangleShape possibleCaptureMoveSprite;
         void drawBoard();
+        void drawPieces();
+        void drawPossibleMoves();
+        sf::CircleShape loadPossibleMove();
+        sf::RectangleShape loadPossibleCaptureMove();
         ChessGame();
         ~ChessGame();
 };
