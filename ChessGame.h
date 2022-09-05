@@ -19,6 +19,8 @@ class ChessGame {
         void drawPieces();
         void drawPossibleMoves();
         void unsetEnPassantPieces();
+        bool isPromoting();
+        void promotePiece(sf::Vector2i position);
         bool noValidMove(Color color);
         bool isCheckmated(Color color);
         bool isStalemated(Color color);

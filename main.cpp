@@ -25,15 +25,17 @@ int main() {
                 if (e.mouseButton.button == sf::Mouse::Left) {
                     for (int i = 0; i < 8; i++) {
                         for (int j = 0; j < 8; j++) {
-                            if (game->board->getPieceAt(j, i) != nullptr && x == j && y == i && game->board->getColorAt(j, i) == game->currTurn) {
+                            if (game->board->getPieceAt(j, i) != nullptr && x == j && y == i && game->board->getColorAt(j, i) == game->currTurn && !game->isPromoting()) {
                                 game->movingPiece = game->board->getPieceAt(x, y);
                             }
                         }
                     }
+                    if (game->isPromoting()) {
+                        game->promotePiece(position);
+                    }
                 }
             }
             if (e.type == sf::Event::MouseButtonReleased) {
-// if !ispromoting
                 if (game->movingPiece != nullptr) {
                     int movingPieceX = game->movingPiece->getPiecePosition(game->board).first;
                     int movingPieceY = game->movingPiece->getPiecePosition(game->board).second;
@@ -66,16 +68,16 @@ int main() {
         }
         game->gameWindow.display();
 
-        // if (game->isCheckmated(WHITE)) {
-        //     std::cout << "BLACK WINS" << std::endl;
-        // }
-        // if (game->isCheckmated(BLACK)) {
-        //     std::cout << "BLACK WINS" << std::endl;
-        // }
+        if (game->isCheckmated(WHITE)) {
+            std::cout << "BLACK WINS" << std::endl;
+        }
+        if (game->isCheckmated(BLACK)) {
+            std::cout << "BLACK WINS" << std::endl;
+        }
 
-        // if (game->isStalemated(WHITE) || game->isStalemated(BLACK)) {
-        //     std::cout << "STALEMATE" << std::endl;
-        // }
+        if (game->isStalemated(WHITE) || game->isStalemated(BLACK)) {
+            std::cout << "STALEMATE" << std::endl;
+        }
     }
 
         return 0;

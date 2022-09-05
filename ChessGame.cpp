@@ -2,6 +2,10 @@
 #include "Board.h"
 #include "ChessPiece.h"
 #include "Pawn.h"
+#include "Rook.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "Knight.h"
 #include "constants.cpp"
 #include <iostream>
 
@@ -69,6 +73,45 @@ void ChessGame::drawPossibleMoves() {
         } 
     }
 }
+
+bool ChessGame::isPromoting() {
+    for (int x = 0; x < 8; x++) {
+        if (board->getTypeAt(x, 0) == "PROMOTION") return true;
+        if (board->getTypeAt(x, 7) == "PROMOTION") return true;
+    }
+    return false;
+}
+
+void ChessGame::promotePiece(sf::Vector2i position) {
+    int promotionX;
+    int promotionY;
+    for (int x = 0; x < 8; x++) {
+        if (board->getTypeAt(x, 0) == "PROMOTION") {
+            promotionX = x;
+            promotionY = 0;
+        }
+        if (board->getTypeAt(x, 7) == "PROMOTION") {
+            promotionX = x;
+            promotionY = 7;
+        }
+    }
+    if (position.x / size == promotionX && position.y / size == promotionY) {
+        if (position.x % size < size / 2 && position.y % size < size / 2) {
+            board->boardState[promotionY][promotionX] = promotionY == 0 ? new Rook(board->bottomPlayer, false) : new Rook(board->topPlayer, false);
+            board->boardState[promotionY][promotionX]->pieceSprite.setPosition(promotionX * size, promotionY * size);
+        } else if (position.x % size > size / 2 && position.y % size < size / 2) {
+            board->boardState[promotionY][promotionX] = promotionY == 0 ? new Queen(board->bottomPlayer) : new Queen(board->topPlayer);
+            board->boardState[promotionY][promotionX]->pieceSprite.setPosition(promotionX * size, promotionY * size);
+        } else if (position.x % size < size / 2 && position.y % size > size / 2) {
+            board->boardState[promotionY][promotionX] = promotionY == 0 ? new Bishop(board->bottomPlayer) : new Bishop(board->topPlayer);
+            board->boardState[promotionY][promotionX]->pieceSprite.setPosition(promotionX * size, promotionY * size);
+        } else if (position.x % size > size / 2 && position.y % size > size / 2) {
+            board->boardState[promotionY][promotionX] = promotionY == 0 ? new Knight(board->bottomPlayer) : new Knight(board->topPlayer);
+            board->boardState[promotionY][promotionX]->pieceSprite.setPosition(promotionX * size, promotionY * size);
+        }
+    }
+}
+
 
 bool ChessGame::noValidMove(Color color) {
     for (int y = 0; y < 8; y++) {

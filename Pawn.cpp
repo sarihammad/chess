@@ -1,4 +1,6 @@
 #include "Pawn.h"
+#include "PromotionSquare.h"
+#include "constants.cpp"
 #include <iostream>
 
 Pawn::Pawn(Color color) : ChessPiece(color), isEnPassantPiece(false) {
@@ -57,13 +59,19 @@ void Pawn::enPassantCapture(Board *board, int new_x, int new_y) {
 }
 
 void Pawn::movePiece(Board *board, int new_x, int new_y) {
+    int x = getPiecePosition(board).first;
     int y = getPiecePosition(board).second;
     if (abs(new_y - y) == 2) isEnPassantPiece = true;
     if (isValidEnPassantMove(board, new_x, new_y)) {
         enPassantCapture(board, new_x, new_y);
     }
     ChessPiece::movePiece(board, new_x, new_y);
-    
+    if (pieceColor == board->bottomPlayer && new_y == 0 || pieceColor == board->topPlayer && new_y == 7) {
+        PromotionSquare *promotionSquare = new PromotionSquare(pieceColor);
+        board->boardState[y][x] = nullptr;
+        board->boardState[new_y][new_x] = promotionSquare;
+        promotionSquare->pieceSprite.setPosition(new_x * size, new_y * size);
+    }
 }
 
 std::string Pawn::getPieceType() {
