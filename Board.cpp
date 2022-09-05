@@ -155,12 +155,12 @@ bool Board::nextMoveIsChecked(ChessPiece *movingPiece, int new_x, int new_y) {
     int x = movingPiece->getPiecePosition(this).first;
     int y = movingPiece->getPiecePosition(this).second;
     ChessPiece *newSquarePiece = getPieceAt(new_x, new_y);
-    // movingPiece->movePiece(this, new_x, new_y);
-    // // nextMoveInCheck = isChecked(movingPiece->pieceColor);
-    // movingPiece->movePiece(this, x, y);
-    // newSquarePiece->movePiece(this, new_x, new_y);
-    // return nextMoveInCheck;
-    return false;
+    movingPiece->movePiece(this, new_x, new_y);
+    nextMoveInCheck = isChecked(movingPiece->pieceColor);
+    movingPiece->movePiece(this, x, y);
+    if (newSquarePiece != nullptr) newSquarePiece->movePiece(this, new_x, new_y);
+    return nextMoveInCheck;
+    // return false;
 }
 
 sf::Sprite Board::loadBoard() {

@@ -21,7 +21,7 @@ void ChessGame::drawBoard() {
 void ChessGame::drawPieces() {
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 8; x++) {
-            if (board->getPieceAt(x, y) == nullptr) continue;
+            if (board->getPieceAt(x, y) == nullptr || board->getPieceAt(x, y) == movingPiece) continue;
             gameWindow.draw(board->getPieceAt(x, y)->pieceSprite);
         } 
     }
@@ -60,7 +60,7 @@ sf::RectangleShape ChessGame::loadPossibleCaptureMove() {
 void ChessGame::drawPossibleMoves() {
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 8; x++) {
-            if (movingPiece != nullptr && movingPiece->isValidMove(board, x, y)) {
+            if (movingPiece != nullptr && movingPiece->isValidMove(board, x, y) && !board->nextMoveIsChecked(movingPiece, x, y)) {
                 if (board->getColorAt(x, y) == getOtherColor(movingPiece->pieceColor)) {
                     possibleCaptureMoveSprite.setPosition(x*size + size/2, y*size + size/2);
                     gameWindow.draw(possibleCaptureMoveSprite);
