@@ -42,20 +42,6 @@ int main() {
                     int movingPieceY = game->movingPiece->getPiecePosition(game->board).second;
                     if (game->currTurn == game->movingPiece->pieceColor && game->movingPiece->isValidMove(game->board, x, y) && !game->board->nextMoveIsChecked(game->movingPiece, x, y)) {
 
-                        if (game->movingPiece->getPieceType() == "KING") {
-                            King *king = (King *) game->movingPiece;
-                            if (king->isValidKingsideCastleMove(game->board, x, y)) king->castleKingside(game->board, x, y);
-                            if (king->isValidQueensideCastleMove(game->board, x, y)) king->castleQueenside(game->board, x, y);
-                            king->moved = true;
-
-                        }
-
-                        if (game->movingPiece->getPieceType() == "ROOK") {
-                            Rook *rook = (Rook *) game->movingPiece;
-                            rook->moved = true;
-                        }
-
-
                         game->movingPiece->movePiece(game->board, x, y);
                         game->currTurn = getOtherColor(game->currTurn);
 

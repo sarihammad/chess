@@ -1,5 +1,6 @@
 #include "King.h"
 #include "Rook.h"
+#include <iostream>
 
 King::King(Color color) : ChessPiece(color), moved(false) {
     pieceSprite = loadPiece();
@@ -45,23 +46,25 @@ bool King::isValidMove(Board *board, int new_x, int new_y) {
 
 void King::movePiece(Board *board, int new_x, int new_y) {
     int x = getPiecePosition(board).first;
+    Rook *castlingRook;
+    if (board->bottomPlayer == WHITE) {
+        if (new_x - x == 2 && canCastleKingside(board)) {
+            castlingRook = (Rook*) board->getPieceAt(7, new_y);
+            castlingRook->movePiece(board, new_x - 1, new_y);
+        } else if (x - new_x == 2 && canCastleQueenside(board)) {
+            castlingRook = (Rook*) board->getPieceAt(0, new_y);
+            castlingRook->movePiece(board, new_x + 1, new_y);
+        }
+    } else {
+        if (x - new_x == 2 && canCastleKingside(board)) {
+            castlingRook = (Rook*) board->getPieceAt(0, new_y);
+            castlingRook->movePiece(board, new_x + 1, new_y);
+        } else if (new_x - x == 2 && canCastleQueenside(board)) {
+            castlingRook = (Rook*) board->getPieceAt(7, new_y);
+            castlingRook->movePiece(board, new_x - 1, new_y);
+        }
+    }
     ChessPiece::movePiece(board, new_x, new_y);
-    if (isValidMove(board, new_x, new_y) && abs(new_x - x) == 2 && canCastleKingside(board) && (new_x == 1 || new_x == 7)) {
-        Rook *kingsideRook = new_x == 1 ? (Rook*) board->getPieceAt(0, new_y) : (Rook*) board->getPieceAt(7, new_y);
-        if (new_x == 1) {
-            kingsideRook->movePiece(board, new_x+2, new_y);
-        } else {
-            kingsideRook->movePiece(board, new_x-2, new_y);
-        }
-    }
-    if (isValidMove(board, new_x, new_y) && abs(new_x - x) == 2 && canCastleQueenside(board) && (new_x == 2 || new_x == 5)) {
-        Rook *queensideRook = new_x == 2 ? (Rook*) board->getPieceAt(0, new_y) : (Rook*) board->getPieceAt(7, new_y);
-        if (new_x == 2) {
-            queensideRook->movePiece(board, new_x+3, new_y);
-        } else {
-            queensideRook->movePiece(board, new_x-3, new_y);
-        }
-    }
     moved = true;
 }
 
@@ -125,47 +128,47 @@ bool King::canCastleKingside(Board *board) {
     return false;
 }
 
-bool King::isValidKingsideCastleMove(Board *board, int new_x, int new_y) {
-    int currX = getPiecePosition(board).first;
-    if (board->bottomPlayer == WHITE && new_x - currX == 2 && canCastleKingside(board)) return true;
-    if (board->bottomPlayer == BLACK && currX - new_x == 2 && canCastleKingside(board)) return true;
-    return false;
-}
+// bool King::isValidKingsideCastleMove(Board *board, int new_x, int new_y) {
+//     int currX = getPiecePosition(board).first;
+//     if (board->bottomPlayer == WHITE && new_x - currX == 2 && canCastleKingside(board)) return true;
+//     if (board->bottomPlayer == BLACK && currX - new_x == 2 && canCastleKingside(board)) return true;
+//     return false;
+// }
 
-void King::castleKingside(Board *board, int new_x, int new_y) {
-    int kingX = getPiecePosition(board).first;
-    int kingY = getPiecePosition(board).second;
-    Rook *kingsideRook;
-    if (board->bottomPlayer == WHITE) {
-        kingsideRook = (Rook *) board->getPieceAt(kingX+3, kingY);
-        kingsideRook->movePiece(board, new_x - 1, new_y);
-    } else {
-        kingsideRook = (Rook *) board->getPieceAt(kingX-3, kingY);
-        kingsideRook->movePiece(board, new_x + 1, new_y);
-    }
-}
+// void King::castleKingside(Board *board, int new_x, int new_y) {
+//     int kingX = getPiecePosition(board).first;
+//     int kingY = getPiecePosition(board).second;
+//     Rook *kingsideRook;
+//     if (board->bottomPlayer == WHITE) {
+//         kingsideRook = (Rook *) board->getPieceAt(kingX+3, kingY);
+//         kingsideRook->movePiece(board, new_x - 1, new_y);
+//     } else {
+//         kingsideRook = (Rook *) board->getPieceAt(kingX-3, kingY);
+//         kingsideRook->movePiece(board, new_x + 1, new_y);
+//     }
+// }
 
-bool King::isValidQueensideCastleMove(Board *board, int new_x, int new_y) {
-    int currX = getPiecePosition(board).first;
-    if (board->bottomPlayer == WHITE && currX - new_x == 2 && canCastleQueenside(board)) return true;
-    if (board->bottomPlayer == BLACK && new_x - currX == 2 && canCastleQueenside(board)) return true;
-    return false;
-}
+// bool King::isValidQueensideCastleMove(Board *board, int new_x, int new_y) {
+//     int currX = getPiecePosition(board).first;
+//     if (board->bottomPlayer == WHITE && currX - new_x == 2 && canCastleQueenside(board)) return true;
+//     if (board->bottomPlayer == BLACK && new_x - currX == 2 && canCastleQueenside(board)) return true;
+//     return false;
+// }
 
-void King::castleQueenside(Board *board, int new_x, int new_y) {
-    int kingX = getPiecePosition(board).first;
-    int kingY = getPiecePosition(board).second;
-    Rook *queensideRook;
-    if (board->bottomPlayer == WHITE) {
-        queensideRook = (Rook *) board->getPieceAt(kingX-4, kingY);
-        queensideRook->movePiece(board, new_x + 1, new_y);
-        // board->boardState[new_y][new_x + 1] = queensideRook;
-    } else {
-        queensideRook = (Rook *) board->getPieceAt(kingX+4, kingY);
-        queensideRook->movePiece(board, new_x - 1, new_y);
-        // board->boardState[new_y][new_x - 1] = queensideRook;
-    }
-}
+// void King::castleQueenside(Board *board, int new_x, int new_y) {
+//     int kingX = getPiecePosition(board).first;
+//     int kingY = getPiecePosition(board).second;
+//     Rook *queensideRook;
+//     if (board->bottomPlayer == WHITE) {
+//         queensideRook = (Rook *) board->getPieceAt(kingX-4, kingY);
+//         queensideRook->movePiece(board, new_x + 1, new_y);
+//         // board->boardState[new_y][new_x + 1] = queensideRook;
+//     } else {
+//         queensideRook = (Rook *) board->getPieceAt(kingX+4, kingY);
+//         queensideRook->movePiece(board, new_x - 1, new_y);
+//         // board->boardState[new_y][new_x - 1] = queensideRook;
+//     }
+// }
 
 std::string King::getPieceType() {
     return "KING";

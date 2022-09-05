@@ -19,7 +19,7 @@ class ChessPiece {
         // virtual sf::Sprite setUpSprite();
         virtual bool isValidMove(Board *board, int new_x, int new_y);
         virtual std::string getPieceType();
-        void movePiece(Board *board, int new_x, int new_y);
+        virtual void movePiece(Board *board, int new_x, int new_y);
         std::pair<int, int> getPiecePosition(Board *board);
         sf::Sprite loadPiece();
         ChessPiece(Color color);
