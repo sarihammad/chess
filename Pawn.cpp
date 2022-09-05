@@ -1,4 +1,5 @@
 #include "Pawn.h"
+#include <iostream>
 
 Pawn::Pawn(Color color) : ChessPiece(color), isEnPassantPiece(false) {
     pieceSprite = loadPiece();
@@ -38,6 +39,31 @@ bool Pawn::isValidMove(Board *board, int new_x, int new_y) {
         }   
     }   
     return false; 
+}
+
+bool Pawn::isValidEnPassantMove(Board *board, int new_x, int new_y) {
+    Pawn *pawn;
+    if (pieceColor == board->bottomPlayer) {
+        if (board->getTypeAt(new_x, new_y + 1) == "PAWN") {
+            pawn = (Pawn *) board->getPieceAt(new_x, new_y + 1);
+            if (pawn->isEnPassantPiece && pawn->pieceColor == getOtherColor(pieceColor)) return true;
+        } 
+    } else {
+        if (board->getTypeAt(new_x, new_y - 1) == "PAWN") {
+            pawn = (Pawn *) board->getPieceAt(new_x, new_y - 1);
+            if (pawn->isEnPassantPiece && pawn->pieceColor == getOtherColor(pieceColor)) return true;
+        } 
+    }
+    return false;
+}
+
+void Pawn::enPassantCapture(Board *board, int new_x, int new_y) {
+    Pawn *pawn = (Pawn *) board->getPieceAt(new_x, new_y + 1);
+    if (pieceColor == board->bottomPlayer) {
+        board->boardState[new_y + 1][new_x] = nullptr;
+    } else {
+        board->boardState[new_y - 1][new_x] = nullptr;
+    }
 }
 
 std::string Pawn::getPieceType() {

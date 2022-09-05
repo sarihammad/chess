@@ -4,6 +4,7 @@
 #include "ChessGame.h"
 #include "helpers.cpp"
 #include "ChessPiece.h"
+#include "Pawn.h"
 #include <iostream>
 
 
@@ -35,13 +36,34 @@ int main() {
             if (e.type == sf::Event::MouseButtonReleased) {
 // if !ispromoting
                 if (game->movingPiece != nullptr) {
+                    int movingPieceX = game->movingPiece->getPiecePosition(game->board).first;
+                    int movingPieceY = game->movingPiece->getPiecePosition(game->board).second;
                     if (game->currTurn == game->movingPiece->pieceColor && game->movingPiece->isValidMove(game->board, x, y) && !game->board->nextMoveIsChecked(game->movingPiece, x, y)) {
-                    game->movingPiece->movePiece(game->board, x, y);
-                    game->currTurn = getOtherColor(game->currTurn);
-                    // setSoundFromMove(&soundBuffer, &moveSound, movingPieceX, movingPieceY, x, y);
-                    // moveSound.play();
+
+                        game->movingPiece->movePiece(game->board, x, y);
+                        game->currTurn = getOtherColor(game->currTurn);
+
+                        if (game->movingPiece->getPieceType() == "PAWN") {
+                            Pawn *enPassantPiece = (Pawn *) game->movingPiece;
+                            if (enPassantPiece->isValidEnPassantMove(game->board, x, y)) enPassantPiece->enPassantCapture(game->board, x, y);
+                        }
+
+                        for (int y = 0; y < 8; y++) {
+                            for (int x = 0; x < 8; x++) {
+                                if (game->board->getTypeAt(x, y) == "PAWN")  {
+                                    Pawn *pawnPiece = (Pawn *) game->board->getPieceAt(x, y);
+                                    if (pawnPiece->isEnPassantPiece) pawnPiece->isEnPassantPiece = false;
+                                }
+                            }
+                        }
+
+                        if (game->movingPiece->getPieceType() == "PAWN" && abs(y - movingPieceY) == 2) {
+                            Pawn *enPassantPiece = (Pawn *) game->movingPiece;
+                            enPassantPiece->isEnPassantPiece = true;
+                        }
+
                     } else {
-                        game->movingPiece->pieceSprite.setPosition(size * game->movingPiece->getPiecePosition(game->board).first, size * game->movingPiece->getPiecePosition(game->board).second);
+                        game->movingPiece->pieceSprite.setPosition(size * movingPieceX, size * movingPieceY);
                     }
                     game->movingPiece = nullptr;
                 }
@@ -112,10 +134,9 @@ int main() {
         if (game->movingPiece != nullptr) {
             game->movingPiece->pieceSprite.setPosition(position.x - size / 2, position.y - size / 2);
             game->gameWindow.draw(game->movingPiece->pieceSprite);
-            game->drawPossibleMoves();
         }
+        game->drawPossibleMoves();
         game->drawPieces();
-
         game->gameWindow.display();
 
     }
