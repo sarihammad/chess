@@ -48,7 +48,7 @@ sf::RectangleShape ChessGame::loadPossibleCaptureMove() {
 void ChessGame::drawPossibleMoves() {
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 8; x++) {
-            if (movingPiece->isValidMove(board, x, y)) {
+            if (movingPiece != nullptr && movingPiece->isValidMove(board, x, y)) {
                 if (board->getColorAt(x, y) == getOtherColor(movingPiece->pieceColor)) {
                     possibleCaptureMoveSprite.setPosition(x*size + size/2, y*size + size/2);
                     gameWindow.draw(possibleCaptureMoveSprite);
