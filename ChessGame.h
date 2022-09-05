@@ -19,6 +19,9 @@ class ChessGame {
         void drawPieces();
         void drawPossibleMoves();
         void unsetEnPassantPieces();
+        bool noValidMove(Color color);
+        bool isCheckmated(Color color);
+        bool isStalemated(Color color);
         sf::CircleShape loadPossibleMove();
         sf::RectangleShape loadPossibleCaptureMove();
         ChessGame();

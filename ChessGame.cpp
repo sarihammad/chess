@@ -39,10 +39,8 @@ void ChessGame::unsetEnPassantPieces() {
 }
 
 sf::CircleShape ChessGame::loadPossibleMove() {
-    
     possibleMoveSprite.setRadius(size/5);
-    sf::Color possibleMoveColor(0, 0, 0, 50);
-    possibleMoveSprite.setFillColor(possibleMoveColor);
+    possibleMoveSprite.setFillColor(sf::Color(0, 0, 0, 50));
     possibleMoveSprite.setOrigin(size/5, size/5);
     return possibleMoveSprite;
 }
@@ -50,10 +48,8 @@ sf::CircleShape ChessGame::loadPossibleMove() {
 
 sf::RectangleShape ChessGame::loadPossibleCaptureMove() {
     possibleCaptureMoveSprite.setOrigin(size/2, size/2);
-    sf::Vector2f possibleCaptureMoveSize(size, size);
-    sf::Color possibleCaptureMoveColor(255, 0, 0, 255);
-    possibleCaptureMoveSprite.setSize(possibleCaptureMoveSize);
-    possibleCaptureMoveSprite.setFillColor(possibleCaptureMoveColor);
+    possibleCaptureMoveSprite.setSize(sf::Vector2f(size, size));
+    possibleCaptureMoveSprite.setFillColor(sf::Color(255, 0, 0, 255));
     return possibleCaptureMoveSprite;
 }
 
@@ -74,3 +70,26 @@ void ChessGame::drawPossibleMoves() {
     }
 }
 
+bool ChessGame::noValidMove(Color color) {
+    for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+            ChessPiece *chessPiece;
+            if (board->getColorAt(x, y) != color) continue;
+            chessPiece = board->getPieceAt(x, y);
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (chessPiece->isValidMove(board, j, i) && !board->nextMoveIsChecked(chessPiece, j, i)) return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool ChessGame::isCheckmated(Color color) {
+    return noValidMove(color) && board->isChecked(color);
+}
+
+bool ChessGame::isStalemated(Color color) {
+    return noValidMove(color) && !board->isChecked(color) && currTurn == color;
+}
