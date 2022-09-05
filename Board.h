@@ -20,11 +20,11 @@ class Board {
         Board(Color color);
         ~Board();
         void initializeBoard(Color bottomPlayer);
+        bool isChecked(Color color);
+        bool nextMoveIsChecked(ChessPiece *movingPiece, int new_x, int new_y);
         ChessPiece *getPieceAt(int x, int y);
         std::string getTypeAt(int x, int y);
         Color getColorAt(int x, int y);
-        bool isChecked(Color color);
-        bool nextMoveIsChecked(ChessPiece *movingPiece, int new_x, int new_y);
         sf::Sprite loadBoard();
         
 };

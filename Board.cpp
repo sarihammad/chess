@@ -6,10 +6,8 @@
 #include "Queen.h"
 #include "King.h"
 #include "Pawn.h"
-// #include "Color.h"
 #include "constants.cpp"
 #include <iostream>
-// #include <SFML/Graphics.hpp>
 
 Board::Board(Color color) : bottomPlayer(color), topPlayer(getOtherColor(color)) {
     Board::initializeBoard(color);
@@ -140,34 +138,20 @@ bool Board::isChecked(Color color) {
 }
 
 bool Board::nextMoveIsChecked(ChessPiece *movingPiece, int new_x, int new_y) {
-    bool nextMoveInCheck;
-    // if (movingPiece->isValidMove(this, new_x, new_y)) {
-    //     int x = movingPiece->getPiecePosition(this).first;
-    //     int y = movingPiece->getPiecePosition(this).second;
-    //     ChessPiece *newSquarePiece = getPieceAt(new_x, new_y);
-    //     movingPiece->movePiece(this, new_x, new_y);
-    //     nextMoveInCheck = isChecked(movingPiece->pieceColor);
-    //     movingPiece->movePiece(this, x, y);
-    //     newSquarePiece->movePiece(this, new_x, new_y);
-    //     return nextMoveInCheck;
-    // }
-    // return false;
+    bool nextMoveIsChecked;
     int x = movingPiece->getPiecePosition(this).first;
     int y = movingPiece->getPiecePosition(this).second;
     ChessPiece *newSquarePiece = getPieceAt(new_x, new_y);
-    movingPiece->movePiece(this, new_x, new_y);
-    nextMoveInCheck = isChecked(movingPiece->pieceColor);
-    movingPiece->movePiece(this, x, y);
-    if (newSquarePiece != nullptr) newSquarePiece->movePiece(this, new_x, new_y);
-    return nextMoveInCheck;
-    // return false;
+    boardState[y][x] = nullptr;
+    boardState[new_y][new_x] = movingPiece;
+    nextMoveIsChecked = isChecked(movingPiece->pieceColor);
+    boardState[y][x] = movingPiece;
+    boardState[new_y][new_x] = newSquarePiece;
+    return nextMoveIsChecked;
 }
 
 sf::Sprite Board::loadBoard() {
-    // std::cout << "HI" << std::endl;
-    // std::cout << "HI" << std::endl;
     boardTexture = new sf::Texture;
-    // sf::Texture *text;
     boardTexture->loadFromFile("images/BOARD.png");
     boardSprite.setTexture(*boardTexture);
     return boardSprite;
