@@ -66,6 +66,16 @@ int main() {
         }
         game->gameWindow.display();
 
+        // if (game->isCheckmated(WHITE)) {
+        //     std::cout << "BLACK WINS" << std::endl;
+        // }
+        // if (game->isCheckmated(BLACK)) {
+        //     std::cout << "BLACK WINS" << std::endl;
+        // }
+
+        // if (game->isStalemated(WHITE) || game->isStalemated(BLACK)) {
+        //     std::cout << "STALEMATE" << std::endl;
+        // }
     }
 
         return 0;

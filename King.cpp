@@ -35,13 +35,10 @@ bool King::isValidMove(Board *board, int new_x, int new_y) {
             }
         }
     }
-    // if (abs(x - new_x) != 1 || abs(y - new_y) != 1) {
     if (pieceColor == board->getColorAt(new_x, new_y)) return false;
     return std::max(abs(x - new_x), abs(y - new_y)) == 1;
-    // }
 
 
-    // return true;
 }
 
 void King::movePiece(Board *board, int new_x, int new_y) {
@@ -128,56 +125,6 @@ bool King::canCastleKingside(Board *board) {
     return false;
 }
 
-// bool King::isValidKingsideCastleMove(Board *board, int new_x, int new_y) {
-//     int currX = getPiecePosition(board).first;
-//     if (board->bottomPlayer == WHITE && new_x - currX == 2 && canCastleKingside(board)) return true;
-//     if (board->bottomPlayer == BLACK && currX - new_x == 2 && canCastleKingside(board)) return true;
-//     return false;
-// }
-
-// void King::castleKingside(Board *board, int new_x, int new_y) {
-//     int kingX = getPiecePosition(board).first;
-//     int kingY = getPiecePosition(board).second;
-//     Rook *kingsideRook;
-//     if (board->bottomPlayer == WHITE) {
-//         kingsideRook = (Rook *) board->getPieceAt(kingX+3, kingY);
-//         kingsideRook->movePiece(board, new_x - 1, new_y);
-//     } else {
-//         kingsideRook = (Rook *) board->getPieceAt(kingX-3, kingY);
-//         kingsideRook->movePiece(board, new_x + 1, new_y);
-//     }
-// }
-
-// bool King::isValidQueensideCastleMove(Board *board, int new_x, int new_y) {
-//     int currX = getPiecePosition(board).first;
-//     if (board->bottomPlayer == WHITE && currX - new_x == 2 && canCastleQueenside(board)) return true;
-//     if (board->bottomPlayer == BLACK && new_x - currX == 2 && canCastleQueenside(board)) return true;
-//     return false;
-// }
-
-// void King::castleQueenside(Board *board, int new_x, int new_y) {
-//     int kingX = getPiecePosition(board).first;
-//     int kingY = getPiecePosition(board).second;
-//     Rook *queensideRook;
-//     if (board->bottomPlayer == WHITE) {
-//         queensideRook = (Rook *) board->getPieceAt(kingX-4, kingY);
-//         queensideRook->movePiece(board, new_x + 1, new_y);
-//         // board->boardState[new_y][new_x + 1] = queensideRook;
-//     } else {
-//         queensideRook = (Rook *) board->getPieceAt(kingX+4, kingY);
-//         queensideRook->movePiece(board, new_x - 1, new_y);
-//         // board->boardState[new_y][new_x - 1] = queensideRook;
-//     }
-// }
-
 std::string King::getPieceType() {
     return "KING";
 }
-
-// sf::Sprite King::loadPiece() {
-//     pieceTexture = new sf::Texture;
-//     // std::string imgFile = piece->pieceColor + "_" + piece->pieceType + ".png";
-//     pieceTexture->loadFromFile("images/WHITE_KING.png");
-//     pieceSprite.setTexture(*pieceTexture);
-//     return pieceSprite;
-// }
