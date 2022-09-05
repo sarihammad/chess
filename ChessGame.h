@@ -18,6 +18,7 @@ class ChessGame {
         void drawBoard();
         void drawPieces();
         void drawPossibleMoves();
+        void unsetEnPassantPieces();
         sf::CircleShape loadPossibleMove();
         sf::RectangleShape loadPossibleCaptureMove();
         ChessGame();

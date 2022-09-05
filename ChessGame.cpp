@@ -1,6 +1,7 @@
 #include "ChessGame.h"
 #include "Board.h"
 #include "ChessPiece.h"
+#include "Pawn.h"
 #include "constants.cpp"
 #include <iostream>
 
@@ -23,6 +24,17 @@ void ChessGame::drawPieces() {
             if (board->getPieceAt(x, y) == nullptr) continue;
             gameWindow.draw(board->getPieceAt(x, y)->pieceSprite);
         } 
+    }
+}
+
+void ChessGame::unsetEnPassantPieces() {
+    for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+            if (board->getTypeAt(x, y) == "PAWN" && currTurn == board->getColorAt(x, y))  {
+                Pawn *pawnPiece = (Pawn *) board->getPieceAt(x, y);
+                if (pawnPiece->isEnPassantPiece) pawnPiece->isEnPassantPiece = false;
+            }
+        }
     }
 }
 

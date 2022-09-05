@@ -42,27 +42,31 @@ int main() {
                     int movingPieceY = game->movingPiece->getPiecePosition(game->board).second;
                     if (game->currTurn == game->movingPiece->pieceColor && game->movingPiece->isValidMove(game->board, x, y) && !game->board->nextMoveIsChecked(game->movingPiece, x, y)) {
 
+
+                        game->unsetEnPassantPieces();
                         game->movingPiece->movePiece(game->board, x, y);
                         game->currTurn = getOtherColor(game->currTurn);
+                        // game->unsetEnPassantPieces();
 
-                        if (game->movingPiece->getPieceType() == "PAWN") {
-                            Pawn *enPassantPiece = (Pawn *) game->movingPiece;
-                            if (enPassantPiece->isValidEnPassantMove(game->board, x, y)) enPassantPiece->enPassantCapture(game->board, x, y);
-                        }
 
-                        for (int y = 0; y < 8; y++) {
-                            for (int x = 0; x < 8; x++) {
-                                if (game->board->getTypeAt(x, y) == "PAWN")  {
-                                    Pawn *pawnPiece = (Pawn *) game->board->getPieceAt(x, y);
-                                    if (pawnPiece->isEnPassantPiece) pawnPiece->isEnPassantPiece = false;
-                                }
-                            }
-                        }
+                        // if (game->movingPiece->getPieceType() == "PAWN") {
+                        //     Pawn *enPassantPiece = (Pawn *) game->movingPiece;
+                        //     if (enPassantPiece->isValidEnPassantMove(game->board, x, y)) enPassantPiece->enPassantCapture(game->board, x, y);
+                        // }
+                        // for (int y = 0; y < 8; y++) {
+                        //     for (int x = 0; x < 8; x++) {
+                        //         if (game->board->getTypeAt(x, y) == "PAWN")  {
+                        //             Pawn *pawnPiece = (Pawn *) game->board->getPieceAt(x, y);
+                        //             if (pawnPiece->isEnPassantPiece) pawnPiece->isEnPassantPiece = false;
+                        //         }
+                        //     }
+                        // }
 
-                        if (game->movingPiece->getPieceType() == "PAWN" && abs(y - movingPieceY) == 2) {
-                            Pawn *enPassantPiece = (Pawn *) game->movingPiece;
-                            enPassantPiece->isEnPassantPiece = true;
-                        }
+
+                        // if (game->movingPiece->getPieceType() == "PAWN" && abs(y - movingPieceY) == 2) {
+                        //     Pawn *enPassantPiece = (Pawn *) game->movingPiece;
+                        //     enPassantPiece->isEnPassantPiece = true;
+                        // }
 
 
 

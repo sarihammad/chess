@@ -42,28 +42,28 @@ bool Pawn::isValidMove(Board *board, int new_x, int new_y) {
 }
 
 bool Pawn::isValidEnPassantMove(Board *board, int new_x, int new_y) {
-    Pawn *pawn;
-    if (pieceColor == board->bottomPlayer) {
-        if (board->getTypeAt(new_x, new_y + 1) == "PAWN") {
-            pawn = (Pawn *) board->getPieceAt(new_x, new_y + 1);
-            if (pawn->isEnPassantPiece && pawn->pieceColor == getOtherColor(pieceColor)) return true;
-        } 
-    } else {
-        if (board->getTypeAt(new_x, new_y - 1) == "PAWN") {
-            pawn = (Pawn *) board->getPieceAt(new_x, new_y - 1);
-            if (pawn->isEnPassantPiece && pawn->pieceColor == getOtherColor(pieceColor)) return true;
-        } 
-    }
-    return false;
+    int x = getPiecePosition(board).first;
+    int y = getPiecePosition(board).second;
+
+    return abs(new_x - x) == 1 && abs(new_y - y) == 1 && board->getPieceAt(new_x, new_y) == nullptr && isValidMove(board, new_x, new_y);
 }
 
 void Pawn::enPassantCapture(Board *board, int new_x, int new_y) {
-    Pawn *pawn = (Pawn *) board->getPieceAt(new_x, new_y + 1);
     if (pieceColor == board->bottomPlayer) {
         board->boardState[new_y + 1][new_x] = nullptr;
     } else {
         board->boardState[new_y - 1][new_x] = nullptr;
     }
+}
+
+void Pawn::movePiece(Board *board, int new_x, int new_y) {
+    int y = getPiecePosition(board).second;
+    if (abs(new_y - y) == 2) isEnPassantPiece = true;
+    if (isValidEnPassantMove(board, new_x, new_y)) {
+        enPassantCapture(board, new_x, new_y);
+    }
+    ChessPiece::movePiece(board, new_x, new_y);
+    
 }
 
 std::string Pawn::getPieceType() {
