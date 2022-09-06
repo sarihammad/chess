@@ -13,29 +13,16 @@ bool King::isValidMove(Board *board, int new_x, int new_y) {
     int y = getPiecePosition(board).second;
     if (x < 0 || x > 7 || y < 0 || y > 7 || new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7) return false;
     if (x == new_x && y == new_y) return false;
-
-    if (!moved) {
-        if (board->bottomPlayer == WHITE) {
-            if (x == 4) {
-                if (new_x == x - 2 && new_y == y && canCastleQueenside(board)) return true;
-                if (new_x == x + 2 && new_y == y && canCastleKingside(board)) return true;
-            }
-            if (x == 3) {
-                if (new_x == x + 2 && new_y == y && canCastleQueenside(board)) return true;
-                if (new_x == x - 2 && new_y == y && canCastleKingside(board)) return true;
-            }
-        } else {
-            if (x == 4) {
-                if (new_x == x - 2 && new_y == y && canCastleKingside(board)) return true;
-                if (new_x == x + 2 && new_y == y && canCastleQueenside(board)) return true;
-            }
-            if (x == 3) {
-                if (new_x == x + 2 && new_y == y && canCastleKingside(board)) return true;
-                if (new_x == x - 2 && new_y == y && canCastleQueenside(board)) return true;
-            }
-        }
-    }
     if (pieceColor == board->getColorAt(new_x, new_y)) return false;
+
+    if (board->bottomPlayer == WHITE) {
+        if (new_x == x - 2 && new_y == y && canCastleQueenside(board)) return true;
+        if (new_x == x + 2 && new_y == y && canCastleKingside(board)) return true;
+    } else {
+        if (new_x == x - 2 && new_y == y && canCastleKingside(board)) return true;
+        if (new_x == x + 2 && new_y == y && canCastleQueenside(board)) return true;
+    }
+
     return std::max(abs(x - new_x), abs(y - new_y)) == 1;
 
 
