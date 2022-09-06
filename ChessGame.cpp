@@ -124,6 +124,14 @@ bool ChessGame::isStalemated(Color color) {
     return noValidMove(color) && !board->isChecked(color) && currTurn == color;
 }
 
+bool ChessGame::nextMoveIsCapture(ChessPiece *movingPiece, int new_x, int new_y) {
+    if (movingPiece->getPieceType() == "PAWN") {
+        Pawn *pawn = (Pawn *) movingPiece;
+        if (pawn->isValidEnPassantMove(board, new_x, new_y)) return true;
+    }
+    return movingPiece->pieceColor == getOtherColor(board->getColorAt(new_x, new_y));
+}
+
 bool ChessGame::nextMoveIsCheck(ChessPiece *movingPiece, int new_x, int new_y) {
     bool nextMoveIsCheck;
     int x = movingPiece->getPiecePosition(board).first;
@@ -172,7 +180,7 @@ void ChessGame::setSoundFromMove(sf::SoundBuffer *moveSoundBuffer, sf::Sound *mo
         moveSoundBuffer->loadFromFile("sounds/stalemate.wav");
     } else if (nextMoveIsCheck(movingPiece, new_x, new_y)) {
         moveSoundBuffer->loadFromFile("sounds/check.wav");
-    } else if (movingPiece->pieceColor == getOtherColor(board->getColorAt(new_x, new_y))) {
+    } else if (nextMoveIsCapture(movingPiece, new_x, new_y)) {
         moveSoundBuffer->loadFromFile("sounds/capture.wav");
     } else if (movingPiece->getPieceType() == "KING" && abs(movingPiece->getPiecePosition(board).first - new_x) == 2) {
         moveSoundBuffer->loadFromFile("sounds/castle.wav");

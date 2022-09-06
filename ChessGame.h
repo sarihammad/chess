@@ -28,6 +28,7 @@ class ChessGame {
         bool noValidMove(Color color);
         bool isCheckmated(Color color);
         bool isStalemated(Color color);
+        bool nextMoveIsCapture(ChessPiece *movingPiece, int new_x, int new_y);
         bool nextMoveIsCheck(ChessPiece *movingPiece, int new_x, int new_y);
         bool nextMoveIsCheckmate(ChessPiece *movingPiece, int new_x, int new_y);
         bool nextMoveIsStalemate(ChessPiece *movingPiece, int new_x, int new_y);
