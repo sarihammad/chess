@@ -41,8 +41,10 @@ int main() {
                     int movingPieceY = game->movingPiece->getPiecePosition(game->board).second;
                     if (game->currTurn == game->movingPiece->pieceColor && game->movingPiece->isValidMove(game->board, x, y) && !game->board->nextMoveIsChecked(game->movingPiece, x, y)) {
                         game->unsetEnPassantPieces();
-                        game->movingPiece->movePiece(game->board, x, y);
                         game->currTurn = getOtherColor(game->currTurn);
+                        game->setSoundFromMove(game->moveSoundBuffer, game->moveSound, game->movingPiece, x, y);
+                        game->moveSound->play();
+                        game->movingPiece->movePiece(game->board, x, y);
 
                     } else {
                         game->movingPiece->pieceSprite.setPosition(size * movingPieceX, size * movingPieceY);
@@ -72,7 +74,7 @@ int main() {
             std::cout << "BLACK WINS" << std::endl;
         }
         if (game->isCheckmated(BLACK)) {
-            std::cout << "BLACK WINS" << std::endl;
+            std::cout << "WHITE WINS" << std::endl;
         }
 
         if (game->isStalemated(WHITE) || game->isStalemated(BLACK)) {

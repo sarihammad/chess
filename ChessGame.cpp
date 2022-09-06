@@ -9,10 +9,12 @@
 #include "constants.cpp"
 #include <iostream>
 
-ChessGame::ChessGame() : board(new Board(WHITE)), currTurn(WHITE), movingPiece(nullptr), 
+ChessGame::ChessGame() : board(new Board(WHITE)), currTurn(WHITE), movingPiece(nullptr), moveSoundBuffer(new sf::SoundBuffer()), moveSound(new sf::Sound()), 
 gameWindow(sf::VideoMode(800, 800), "Chess", sf::Style::Titlebar | sf::Style::Close) {
     possibleMoveSprite = loadPossibleMove();
     possibleCaptureMoveSprite = loadPossibleCaptureMove();
+    
+
 
 }
 
@@ -40,21 +42,6 @@ void ChessGame::unsetEnPassantPieces() {
             }
         }
     }
-}
-
-sf::CircleShape ChessGame::loadPossibleMove() {
-    possibleMoveSprite.setRadius(size/5);
-    possibleMoveSprite.setFillColor(sf::Color(0, 0, 0, 50));
-    possibleMoveSprite.setOrigin(size/5, size/5);
-    return possibleMoveSprite;
-}
-
-
-sf::RectangleShape ChessGame::loadPossibleCaptureMove() {
-    possibleCaptureMoveSprite.setOrigin(size/2, size/2);
-    possibleCaptureMoveSprite.setSize(sf::Vector2f(size, size));
-    possibleCaptureMoveSprite.setFillColor(sf::Color(255, 0, 0, 255));
-    return possibleCaptureMoveSprite;
 }
 
 void ChessGame::drawPossibleMoves() {
@@ -135,4 +122,77 @@ bool ChessGame::isCheckmated(Color color) {
 
 bool ChessGame::isStalemated(Color color) {
     return noValidMove(color) && !board->isChecked(color) && currTurn == color;
+}
+
+bool ChessGame::nextMoveIsCheck(ChessPiece *movingPiece, int new_x, int new_y) {
+    bool nextMoveIsCheck;
+    int x = movingPiece->getPiecePosition(board).first;
+    int y = movingPiece->getPiecePosition(board).second;
+    ChessPiece *newSquarePiece = board->getPieceAt(new_x, new_y);
+    board->boardState[y][x] = nullptr;
+    board->boardState[new_y][new_x] = movingPiece;
+    nextMoveIsCheck = board->isChecked(getOtherColor(movingPiece->pieceColor));
+    board->boardState[y][x] = movingPiece;
+    board->boardState[new_y][new_x] = newSquarePiece;
+    return nextMoveIsCheck;
+}
+
+bool ChessGame::nextMoveIsCheckmate(ChessPiece *movingPiece, int new_x, int new_y) {
+    bool nextMoveIsCheckmated;
+    int x = movingPiece->getPiecePosition(board).first;
+    int y = movingPiece->getPiecePosition(board).second;
+    ChessPiece *newSquarePiece = board->getPieceAt(new_x, new_y);
+    board->boardState[y][x] = nullptr;
+    board->boardState[new_y][new_x] = movingPiece;
+    nextMoveIsCheckmated = isCheckmated(getOtherColor(movingPiece->pieceColor));
+    board->boardState[y][x] = movingPiece;
+    board->boardState[new_y][new_x] = newSquarePiece;
+    return nextMoveIsCheckmated;
+}
+
+bool ChessGame::nextMoveIsStalemate(ChessPiece *movingPiece, int new_x, int new_y) {
+    bool nextMoveIsStalemated;
+    int x = movingPiece->getPiecePosition(board).first;
+    int y = movingPiece->getPiecePosition(board).second;
+    ChessPiece *newSquarePiece = board->getPieceAt(new_x, new_y);
+    board->boardState[y][x] = nullptr;
+    board->boardState[new_y][new_x] = movingPiece;
+    nextMoveIsStalemated = isStalemated(movingPiece->pieceColor) || isStalemated(getOtherColor(movingPiece->pieceColor));
+    board->boardState[y][x] = movingPiece;
+    board->boardState[new_y][new_x] = newSquarePiece;
+    return nextMoveIsStalemated;
+}
+
+void ChessGame::setSoundFromMove(sf::SoundBuffer *moveSoundBuffer, sf::Sound *moveSound, ChessPiece *movingPiece, int new_x, int new_y) {
+    if (nextMoveIsCheckmate(movingPiece, new_x, new_y) && movingPiece->pieceColor == board->bottomPlayer) {
+        moveSoundBuffer->loadFromFile("sounds/checkmate_win.wav");  
+    } else if (nextMoveIsCheckmate(movingPiece, new_x, new_y) && movingPiece->pieceColor == board->topPlayer) {
+        moveSoundBuffer->loadFromFile("sounds/checkmate_loss.wav");  
+    } else if (nextMoveIsStalemate(movingPiece, new_x, new_y)) {
+        moveSoundBuffer->loadFromFile("sounds/stalemate.wav");
+    } else if (nextMoveIsCheck(movingPiece, new_x, new_y)) {
+        moveSoundBuffer->loadFromFile("sounds/check.wav");
+    } else if (movingPiece->pieceColor == getOtherColor(board->getColorAt(new_x, new_y))) {
+        moveSoundBuffer->loadFromFile("sounds/capture.wav");
+    } else if (movingPiece->getPieceType() == "KING" && abs(movingPiece->getPiecePosition(board).first - new_x) == 2) {
+        moveSoundBuffer->loadFromFile("sounds/castle.wav");
+    } else {
+        moveSoundBuffer->loadFromFile("sounds/move.wav");
+    }
+    moveSound->setBuffer(*moveSoundBuffer);
+}
+
+sf::CircleShape ChessGame::loadPossibleMove() {
+    possibleMoveSprite.setRadius(size/5);
+    possibleMoveSprite.setFillColor(sf::Color(0, 0, 0, 50));
+    possibleMoveSprite.setOrigin(size/5, size/5);
+    return possibleMoveSprite;
+}
+
+
+sf::RectangleShape ChessGame::loadPossibleCaptureMove() {
+    possibleCaptureMoveSprite.setOrigin(size/2, size/2);
+    possibleCaptureMoveSprite.setSize(sf::Vector2f(size, size));
+    possibleCaptureMoveSprite.setFillColor(sf::Color(255, 0, 0, 255));
+    return possibleCaptureMoveSprite;
 }
