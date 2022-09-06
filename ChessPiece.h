@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ImageLoader.cpp"
 #include "helpers.cpp"
 #include <SFML/Graphics.hpp>
 #include "Color.h"

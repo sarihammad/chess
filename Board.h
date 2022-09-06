@@ -3,7 +3,6 @@
 #include "Board.h"
 #include <SFML/Graphics.hpp>
 #include "helpers.cpp"
-#include "ImageLoader.cpp"
 #include "Color.h"
 
 class ChessPiece;
