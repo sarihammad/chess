@@ -11,7 +11,8 @@ An implementation of Chess using C++
 
 ## Preview
 
-https://user-images.githubusercontent.com/63919507/188939584-65cbdb35-3225-47a0-8265-a3582d4826ac.mp4
+![preview](https://user-images.githubusercontent.com/63919507/188940128-b0916b22-a747-4e29-83c7-4596eb01ab9a.gif)
+
 
 
 
