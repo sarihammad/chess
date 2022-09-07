@@ -1,11 +1,9 @@
 #pragma once
 
-#include "helpers.cpp"
+#include "Utils/constants.cpp"
 #include <SFML/Graphics.hpp>
 #include "Color.h"
 #include "Board.h"
-
-class Board;
 
 // Abstract class for a chess piece
 class ChessPiece {

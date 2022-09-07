@@ -1,6 +1,6 @@
-#include "ChessPiece.h"
-class Board;
+#pragma once
 
+#include "ChessPiece.h"
 
 class Queen : public ChessPiece {
     public:

@@ -6,14 +6,10 @@
 #include "Queen.h"
 #include "King.h"
 #include "Pawn.h"
-#include "constants.cpp"
-#include <iostream>
 
 Board::Board(Color color) : bottomPlayer(color), topPlayer(getOtherColor(color)) {
     Board::initializeBoard(color);
     boardSprite = loadBoard();
-    
-
 }
 
 Board::~Board() { }

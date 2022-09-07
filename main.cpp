@@ -1,12 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "constants.cpp"
-#include "Board.h"
 #include "ChessGame.h"
-#include "helpers.cpp"
 #include "ChessPiece.h"
-#include "Pawn.h"
-#include "King.h"
-#include "Rook.h"
 #include <iostream>
 
 
@@ -65,7 +59,6 @@ int main() {
         game->drawPieces();
         if (game->movingPiece != nullptr) {
             game->movingPiece->pieceSprite.setPosition(position.x - size / 2, position.y - size / 2);
-            // game->movingPiece->pieceSprite.setColor(sf::Color(255, 255, 255, 100));
             game->gameWindow.draw(game->movingPiece->pieceSprite);
         }
         game->gameWindow.display();

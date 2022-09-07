@@ -1,10 +1,9 @@
-#include "ChessPiece.h"
-class Board;
+#pragma once
 
+#include "ChessPiece.h"
 
 class PromotionSquare : public ChessPiece {
     public:
-        // ChessPiece *getPromotionPiece();
         std::string getPieceType();
         PromotionSquare(Color pieceColor);
         ~PromotionSquare();

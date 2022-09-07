@@ -1,7 +1,5 @@
 #include "Pawn.h"
 #include "PromotionSquare.h"
-#include "constants.cpp"
-#include <iostream>
 
 Pawn::Pawn(Color color) : ChessPiece(color), isEnPassantPiece(false) {
     pieceSprite = loadPiece();

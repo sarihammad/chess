@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Board.h"
 #include <SFML/Graphics.hpp>
-#include "helpers.cpp"
+#include "Utils/helpers.cpp"
 #include "Color.h"
 
 class ChessPiece;

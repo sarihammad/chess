@@ -1,9 +1,4 @@
 #include "ChessPiece.h"
-// #include <ImageLoader.cpp"
-#include "constants.cpp"
-#include <iostream>
-
-
 
 ChessPiece::ChessPiece(Color color) : pieceColor(color) {
 }

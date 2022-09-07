@@ -24,18 +24,3 @@ bool Knight::isValidMove(Board *board, int new_x, int new_y) {
 std::string Knight::getPieceType() {
     return "KNIGHT";
 }
-
-// sf::Sprite Knight::loadPiece() {
-//     pieceTexture = new sf::Texture;
-//     // std::string imgFile = piece->pieceColor + "_" + piece->pieceType + ".png";
-//     pieceTexture->loadFromFile("images/WHITE_KNIGHT.png");
-//     pieceSprite.setTexture(*pieceTexture);
-//     return pieceSprite;
-// }
-
-
-
-
-
-
-

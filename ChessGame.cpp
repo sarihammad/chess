@@ -1,13 +1,9 @@
 #include "ChessGame.h"
-#include "Board.h"
-#include "ChessPiece.h"
 #include "Pawn.h"
 #include "Rook.h"
 #include "Queen.h"
 #include "Bishop.h"
 #include "Knight.h"
-#include "constants.cpp"
-#include <iostream>
 
 ChessGame::ChessGame() : board(new Board(WHITE)), currTurn(WHITE), movingPiece(nullptr), moveSoundBuffer(new sf::SoundBuffer()), moveSound(new sf::Sound()), 
 gameWindow(sf::VideoMode(800, 800), "Chess", sf::Style::Titlebar | sf::Style::Close) {

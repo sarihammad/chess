@@ -1,10 +1,8 @@
-// #include "Board.h"
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Color.h"
-#include "Board.h"
-
-
 
 class Board;
 class ChessPiece;

@@ -1,6 +1,5 @@
 #include "King.h"
 #include "Rook.h"
-#include <iostream>
 
 King::King(Color color) : ChessPiece(color), moved(false) {
     pieceSprite = loadPiece();
