@@ -13,9 +13,6 @@ ChessGame::ChessGame() : board(new Board(WHITE)), currTurn(WHITE), movingPiece(n
 gameWindow(sf::VideoMode(800, 800), "Chess", sf::Style::Titlebar | sf::Style::Close) {
     possibleMoveSprite = loadPossibleMove();
     possibleCaptureMoveSprite = loadPossibleCaptureMove();
-    
-
-
 }
 
 ChessGame::~ChessGame() { }
@@ -173,7 +170,7 @@ bool ChessGame::nextMoveIsStalemate(ChessPiece *movingPiece, int new_x, int new_
 
 void ChessGame::setSoundFromMove(sf::SoundBuffer *moveSoundBuffer, sf::Sound *moveSound, ChessPiece *movingPiece, int new_x, int new_y) {
     if (nextMoveIsCheckmate(movingPiece, new_x, new_y) && movingPiece->pieceColor == board->bottomPlayer) {
-        moveSoundBuffer->loadFromFile("sounds/checkmate_win.wav");  
+        moveSoundBuffer->loadFromFile("sounds/checkmate_win.wav");
     } else if (nextMoveIsCheckmate(movingPiece, new_x, new_y) && movingPiece->pieceColor == board->topPlayer) {
         moveSoundBuffer->loadFromFile("sounds/checkmate_loss.wav");  
     } else if (nextMoveIsStalemate(movingPiece, new_x, new_y)) {
