@@ -9,11 +9,8 @@
 class ChessPiece {
     public:
         Color pieceColor;
-        // std::string pieceType;
-        // static std::pair<int, int> piecePosition;
         sf::Sprite pieceSprite;
         sf::Texture *pieceTexture;
-        // virtual sf::Sprite setUpSprite();
         virtual bool isValidMove(Board *board, int new_x, int new_y);
         virtual std::string getPieceType();
         virtual void movePiece(Board *board, int new_x, int new_y);
