@@ -47,10 +47,16 @@ int main() {
                 }
             }
 
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::R) {
-                game->board->initializeBoard(game->board->bottomPlayer);
-                game->currTurn = WHITE;
+            if (e.type == sf::Event::KeyPressed) {
+                if (e.key.code == sf::Keyboard::R) {
+                    game->board->initializeBoard(game->board->bottomPlayer);
+                    game->currTurn = WHITE;
+                }
+                if (e.key.code == sf::Keyboard::F) {
+                    game->board->flipBoard();
+                }
             }
+
         }
 
         game->gameWindow.clear();

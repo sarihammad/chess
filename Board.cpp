@@ -9,6 +9,7 @@
 
 Board::Board(Color color) : bottomPlayer(color), topPlayer(getOtherColor(color)) {
     Board::initializeBoard(color);
+    // boardStateStack = std::stack<ChessPiece* [8][8]>();
     boardSprite = loadBoard();
 }
 
@@ -93,6 +94,19 @@ void Board::initializeBoard(Color bottomPlayer) {
             if (getPieceAt(x, y) != nullptr) boardState[y][x]->pieceSprite.setPosition(x*size, y*size);
         }
     }
+}
+
+void Board::flipBoard() {
+    ChessPiece *tempBoardState[8][8];
+    memcpy(tempBoardState, boardState, sizeof(boardState));
+    for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+            boardState[y][x] = tempBoardState[7-y][7-x];
+            if (getPieceAt(x, y) != nullptr) boardState[y][x]->pieceSprite.setPosition(x*size, y*size);
+        }
+    }
+    topPlayer = getOtherColor(topPlayer);
+    bottomPlayer = getOtherColor(bottomPlayer);
 }
 
 std::string Board::getTypeAt(int x, int y) {
