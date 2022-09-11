@@ -26,6 +26,10 @@ int main() {
                     }
                     if (game->isPromoting()) {
                         game->promotePiece(position);
+                        if (!game->isPromoting() && game->board->isChecked(game->currTurn) || game->isCheckmated(game->currTurn)) {
+                            game->setSoundFromMove(game->moveSoundBuffer, game->moveSound, game->board->getPieceAt(x, y), x, y);
+                            game->moveSound->play();
+                        }
                     }
                 }
             }
@@ -39,7 +43,6 @@ int main() {
                         game->setSoundFromMove(game->moveSoundBuffer, game->moveSound, game->movingPiece, x, y);
                         game->moveSound->play();
                         game->movingPiece->movePiece(game->board, x, y);
-
                     } else {
                         game->movingPiece->pieceSprite.setPosition(size * movingPieceX, size * movingPieceY);
                     }
