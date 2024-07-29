@@ -2,9 +2,17 @@
 
 An implementation of Chess using C++
 
-## How to Run
+## How to Run (On Mac)
 
-1. **Compile the Code**
+1. **Install SFML**
+
+   Open a terminal and run the following command to install SFML:
+
+   ```sh
+   brew install sfml
+   ```
+
+2. **Compile the Code**
 
    Open a terminal and run the following command to compile the source files:
 
@@ -16,7 +24,7 @@ An implementation of Chess using C++
    -o chess
    ```
 
-2. **Run the Executable**
+3. **Run the Executable**
 
   After compiling, execute the program with the following command:
 
