@@ -2,6 +2,30 @@
 
 An implementation of Chess using C++
 
+## How to Run
+
+1. **Compile the Code**
+
+   Open a terminal and run the following command to compile the source files:
+
+   ```sh
+   g++ main.cpp board.cpp king.cpp queen.cpp pawn.cpp rook.cpp bishop.cpp knight.cpp promotionsquare.cpp chesspiece.cpp chessgame.cpp \
+   -I/opt/homebrew/Cellar/sfml/2.6.1/include \
+   -L/opt/homebrew/Cellar/sfml/2.6.1/lib \
+   -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio \
+   -o chess
+   ```
+
+2. **Run the Executable**
+
+  After compiling, execute the program with the following command:
+
+```sh
+  ./chess
+```
+
+
+
 ## Controls
 
 * The mouse drags the pieces on the board to a valid square
