@@ -3,12 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include "Utils/helpers.cpp"
 #include "Color.h"
+#include <stack>
 
 class ChessPiece;
 
 class Board {
-    private:
-        // ChessPiece *initialBoardState[8][8];
     public:
         ChessPiece *boardState[8][8];
         Color bottomPlayer;
@@ -20,6 +19,7 @@ class Board {
         void initializeBoard(Color bottomPlayer);
         bool isChecked(Color color);
         bool nextMoveIsChecked(ChessPiece *movingPiece, int new_x, int new_y);
+        void flipBoard();
         ChessPiece *getPieceAt(int x, int y);
         std::string getTypeAt(int x, int y);
         Color getColorAt(int x, int y);
