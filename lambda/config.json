@@ -1,0 +1,25 @@
+{
+  "lambda": {
+    "matchmaking": {
+      "name": "chess-matchmaking",
+      "memory": 256,
+      "timeout": 30
+    },
+    "game_move": {
+      "name": "chess-game-move",
+      "memory": 256,
+      "timeout": 15
+    }
+  },
+  "dynamodb": {
+    "games_table": "chess_games",
+    "matchmaking_table": "chess_matchmaking"
+  },
+  "websocket": {
+    "endpoint": "wss://your-api-gateway-id.execute-api.region.amazonaws.com/prod"
+  },
+  "api": {
+    "region": "us-west-2",
+    "stage": "prod"
+  }
+}
