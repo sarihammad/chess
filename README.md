@@ -93,16 +93,12 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
    - 4-ply search
    - Alpha-beta pruning
 
-3. **Advanced** (Elo ~2000)
+3. **Expert** (Elo ~2000)
 
    - 6-ply search
    - CNN evaluation
    - Opening book
 
-4. **Master** (Elo ~2400+)
-   - Up to 12-ply search
-   - Full AI capabilities
-   - Endgame tablebase
 
 ## Online Play
 
