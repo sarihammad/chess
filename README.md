@@ -2,6 +2,10 @@
 
 A multiplayer chess game and AI engine with adaptive difficulty, built with C++, SFML, PyTorch, and AWS Lambda.
 
+## Preview
+
+![preview](https://user-images.githubusercontent.com/63919507/188940128-b0916b22-a747-4e29-83c7-4596eb01ab9a.gif)
+
 ## Features
 
 ### Game Modes
@@ -81,6 +85,4 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
 - CNN evaluation: 200ms per position
 - Auto-scaling up to 10,000 concurrent games
 
-## Preview
 
-![preview](https://user-images.githubusercontent.com/63919507/188940128-b0916b22-a747-4e29-83c7-4596eb01ab9a.gif)
