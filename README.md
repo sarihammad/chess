@@ -10,6 +10,13 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
 
 This project is a work in progress. Core gameplay and AI features are being actively developed. Multiplayer and advanced AI levels are partially implemented.
 
+## TODO
+
+- [ ] Refactor AI evaluation pipeline
+- [ ] Improve board UI and animation transitions
+- [ ] Integrate CNN model into expert difficulty
+- [ ] Finalize Lambda multiplayer logic
+
 ## Features
 
 ### Game Modes
