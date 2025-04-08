@@ -1,6 +1,6 @@
 # Chessmate
 
-A multiplayer chess game and AI engine with adaptive difficulty, built with C++, SFML, PyTorch, and AWS Lambda.
+A multiplayer chess game and AI engine with adaptive difficulty, built with C++, SFML, PyTorch, Flask, and AWS Lambda.
 
 ## Preview
 
@@ -17,27 +17,25 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
 
 ### AI Engine
 
-- Minimax with alpha-beta pruning (40% faster move calculation)
+- Minimax with alpha-beta pruning
 - PyTorch-based Convolutional Neural Networks for position evaluation
-- Adaptive difficulty system
+- Adaptive difficulty scaling
 - Opening book and endgame tablebase integration
 
 ### Online Features
 
-- Real-time multiplayer via AWS Lambda
-- Low-latency gameplay (< 100ms)
-- Auto-scaling server infrastructure
-- Match history and analytics
+- Turn-based multiplayer using AWS Lambda and DynamoDB
+- Match history and basic analytics
 - Global leaderboard
 
 ### Game Features
 
-- SFML graphical interface with smooth animations
+- SFML graphical interface with animations
 - Complete chess rules and move validation
-- In-game analysis and move suggestions
+- Move suggestions and basic in-game analysis
 - Game history with notation
 - Save/load functionality
-- Board customization
+- Board and piece customization
 
 ## Setup
 
@@ -47,42 +45,48 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
 - SFML 2.6.1
 - Python 3.8
 - PyTorch 2.0
+- Flask (for AI server)
 - AWS CLI (for multiplayer)
+
+### Local Development
+
+1. Train the CNN model using the Python scripts in `/scripts`
+2. Run the Flask AI server locally:
+
+```
+cd server
+python app.py
+```
+3. Launch the C++ game from `/src`
+4. The game communicates with the AI server via HTTP to get move evaluations
 
 ## AI Levels
 
 1. **Beginner** (Elo ~1200)
-
-   - 2-ply search
-   - Basic evaluation
+- 2-ply Minimax
+- Basic evaluation
 
 2. **Intermediate** (Elo ~1600)
-
-   - 4-ply search
-   - Alpha-beta pruning
+- 4-ply search
+- Alpha-beta pruning
 
 3. **Expert** (Elo ~2000)
-
-   - 6-ply search
-   - CNN evaluation
-   - Opening book
-
+- 6-ply search
+- CNN-based evaluation
+- Opening book integration
 
 ## Project Structure
 
-- `/src`: C++ source files
-- `/include`: Header files
-- `/models`: Neural network models
-- `/resources`: Game assets
-- `/scripts`: Python training scripts
-- `/lambda`: AWS Lambda functions
-- `/server`: Multiplayer server code
+- `/src`: C++ source files (game engine and UI)
+- `/include`: C++ header files
+- `/models`: Trained PyTorch models (.pt files)
+- `/resources`: Game assets (sprites, fonts, sounds)
+- `/scripts`: Python training and evaluation scripts
+- `/server`: Flask server to serve the AI model
+- `/lambda`: AWS Lambda functions for multiplayer backend
 
-## Performance
+## Notes
 
-- Move calculation: 40% faster with alpha-beta pruning
-- Average server response: < 100ms
-- CNN evaluation: 200ms per position
-- Auto-scaling up to 10,000 concurrent games
-
-
+- This project is built for learning and demonstration purposes
+- Model inference is done via a Flask API to keep integration simple
+- Multiplayer is handled with serverless functions using AWS Lambda and DynamoDB
