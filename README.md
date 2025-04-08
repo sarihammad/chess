@@ -45,42 +45,6 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
 - PyTorch 2.0
 - AWS CLI (for multiplayer)
 
-### Install
-
-1. **Dependencies**
-
-   ```sh
-   brew install sfml
-   pip install torch numpy boto3
-   aws configure  # Set up AWS credentials for multiplayer
-   ```
-
-2. **Compile**
-
-   ```sh
-   g++ src/*.cpp -I/include -I/opt/homebrew/Cellar/sfml/2.6.1/include \
-   -L/opt/homebrew/Cellar/sfml/2.6.1/lib \
-   -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio \
-   -o chess
-   ```
-
-3. **Run**
-   ```sh
-   ./chess
-   ```
-
-## Controls
-
-- Left-click and drag to move pieces
-- Right-click to show move suggestions
-- F: Flip board
-- R: Reset game
-- U: Undo move
-- S: Save game
-- L: Load game
-- Space: Force AI move
-- Tab: Toggle online mode
-
 ## AI Levels
 
 1. **Beginner** (Elo ~1200)
@@ -99,14 +63,6 @@ A multiplayer chess game and AI engine with adaptive difficulty, built with C++,
    - CNN evaluation
    - Opening book
 
-
-## Online Play
-
-- Real-time matchmaking
-- Ranked and casual modes
-- ELO-based player matching
-- Spectator mode
-- Chat functionality
 
 ## Project Structure
 
