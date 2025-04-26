@@ -1,6 +1,6 @@
 # Chessmate
 
-A chess game and engine with adaptive difficulty.
+Chess game and engine with adaptive difficulty.
 
 ## Preview
 
