@@ -9,4 +9,4 @@ Chess game and engine with adaptive difficulty.
 ## Features
 
 - Singleplayer against AI
-- Multiplayer against real players
+- Multiplayer with matchmaking
